@@ -14,7 +14,7 @@ import (
 type HandlerOrder interface {
 	CreateOrder(order model.Order) (*model.Order, error)
 	GetOrderById(id int) (*model.Order, error)
-	GetOrderByIdUser(req dto.OrderRequest) (*dto.OrdersResponse, error)
+	GetOrderByIdUser(req dto.OrderRequest) ([]dto.OrdersResponse, error)
 }
 type OrderHandler struct {
 	*gin.Engine
@@ -90,7 +90,6 @@ func (h *OrderHandler) GetDetailOrderbyIdUser(c *gin.Context) {
 	}
 	req := dto.OrderRequest{
 		UserID: userIdInt,
-		Item:   "default item", // atau isi dari query/body kalau ada
 	}
 
 	order, err := h.service.GetOrderByIdUser(req)

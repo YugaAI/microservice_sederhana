@@ -28,3 +28,10 @@ func (r *OrderRepository) GetOrderById(id int) (*model.Order, error) {
 	}
 	return &order, nil
 }
+func (r *OrderRepository) GetOrderByUserID(userID int) ([]model.Order, error) {
+	var order []model.Order
+	if err := r.DB.Where("user_id = ?", userID).Find(&order).Error; err != nil {
+		return nil, err
+	}
+	return order, nil
+}
